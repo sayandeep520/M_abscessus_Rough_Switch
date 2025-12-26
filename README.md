@@ -12,6 +12,59 @@ Topological modeling reveals that this genomic collapse triggers a macroscopic s
 
 ---
 
+## Introduction
+
+*Mycobacterium abscessus* distinguishes itself as the most drug-resistant rapid-growing mycobacterium (RGM) affecting patients with Cystic Fibrosis (CF). The clinical trajectory of *M. abscessus* infection is defined by a critical, often irreversible phenotypic switch: the transition from the initial, colonizing **"Smooth" (S)** morphotype to the invasive, hyper-virulent **"Rough" (R)** morphotype.
+
+The Smooth variant is characterized by a cell wall abundant in glycopeptidolipids (GPL), which mask underlying inflammatory ligands and facilitate initial colonization. However, as infection progresses, the population undergoes a catastrophic shift to the Rough variant, losing the GPL coat. This transition triggers hyper-aggregation, the formation of antibiotic-impenetrable cords, and acute pulmonary destruction.
+
+Current literature largely attributes this switch to stochastic mutational noise within the *mmpL* lipid transporter operon. However, the inevitability and rapidity of this transition in chronic infection suggest a deterministic driver rather than a random walk. This study challenges the stochastic model, proposing that the S-to-R switch is a **thermodynamic phase transition** driven by genomic instability and metabolic cost.
+
+By integrating **Genomic Entropy Scanning** with **Topological Data Analysis (TDA)** and **Evolutionary Game Theory**, we demonstrate that the loss of the GPL coat is not an accident, but a strategic evolutionary defection. We identify a hyper-unstable Poly-G tract ("Quantum Slippage") that acts as a binary genetic toggle, forcing the colony into a rigid "Fortress" topology to minimize the metabolic energy cost of lipid synthesis ( ATP).
+
+---
+
+## Data Sources
+
+To ensure statistical rigor and clinical relevance, this study utilized a curated dataset of whole-genome sequences (WGS) derived from longitudinal patient isolates.
+
+* **Primary Dataset:** 260 paired clinical isolates of *Mycobacterium abscessus* subsp. *abscessus*.
+* **Reference Genome:** *M. abscessus* ATCC 19977 (GenBank: CU458896.1) was used for alignment and coordinate mapping.
+* **Quality Control:** Genomes were filtered based on assembly length (5.0 Mb – 5.6 Mb) and GC content (64% ± 1%) to exclude contamination or incomplete assemblies.
+* **Source:** Raw sequencing reads were retrieved from the NCBI Sequence Read Archive (SRA) and processed into FASTA contigs via the *Unicycler* assembly pipeline.
+
+---
+
+## Methodology
+
+This study employs a multi-scale computational framework, divided into three distinct phases:
+
+### **Phase I: Genomic Entropy & K-mer Scanning**
+
+Standard alignment algorithms often fail to resolve hyper-variable homopolymeric regions. To overcome this, we utilized a **Shannon Entropy ($H$)** scanning approach:
+
+1. **$k$-mer Vectorization:** Genomes were decomposed into $k$-mer frequency vectors ($k=6$) to generate a numerical "genomic fingerprint."
+2. **Entropy Calculation:** We calculated the Shannon entropy for sliding windows across the *mmpL* locus to identify regions of maximum instability ($H > 1.0$).
+3. **Target Identification:** High-entropy regions were extracted and mapped using Local BLAST+ to identify specific indel mutations (insertions/deletions) responsible for frameshifts in the *mmpL10* and *TetR* transcriptional regulators.
+
+### **Phase II: Topological Data Analysis (TDA)**
+
+To quantify the structural impact of the mutation, we applied **Persistent Homology**, a method from algebraic topology that measures the "shape" of data:
+
+1. **Point Cloud Generation:** Genomic distance matrices were converted into high-dimensional point clouds using Principal Component Analysis (PCA).
+2. **Vietoris-Rips Filtration:** We constructed simplicial complexes at varying radii ($\epsilon$) to track the birth and death of topological features.
+3. **Homology Groups:** We specifically analyzed $H_1$ features (loops/cycles). The persistence of these loops serves as a topological proxy for the rigid, self-enclosed biofilm structure ("The Fortress") characteristic of the Rough morphotype.
+
+### **Phase III: Evolutionary Game Theory**
+
+To determine the *cause* of the switch, we modeled the population dynamics as a metabolic game:
+
+1. **Payoff Matrix:** We defined a payoff matrix where Smooth strains pay a metabolic tax ($c$) to produce GPLs, while Rough strains "defect" and save this energy.
+2. **Replicator Dynamics:** We solved the differential equations for frequency-dependent selection:
+$$\dot{x} = x(1-x)(b - c)$$
+4. **Bifurcation Analysis:** We simulated the system under varying bacterial loads ($N$) to identify the **Tipping Point**—the critical density at which the metabolic cost of the Smooth phenotype outweighs its benefits, rendering the switch to Roughness irreversible.
+---
+
 ## 📂 Repository Structure
 
 ```text
